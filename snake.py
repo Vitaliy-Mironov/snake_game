@@ -9,26 +9,25 @@ background_image_path = os.path.join(current_directory, "bg.png")
 # Инициализация Pygame
 pygame.init()
 
-# Цвета
+# Константы
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (66, 170, 255)
-
-# Размеры окна и сегментов змеи
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 SEGMENT_SIZE = 20
 
-# Создание окна игры
+# Окно игры
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 background_image = pygame.image.load(background_image_path)
 pygame.display.set_caption('Змейка')
 
+# Время для скорости игры
 clock = pygame.time.Clock()
 
-# Инициализация звуковых эффектов
+# Звуки
 pygame.mixer.init()
 eat_sound = pygame.mixer.Sound(
     os.path.join(current_directory, "sounds", "eat.wav"))
@@ -36,7 +35,7 @@ game_over_sound = pygame.mixer.Sound(
     os.path.join(current_directory, "sounds", "game_over.wav"))
 
 
-# Функция для отрисовки змейки
+# Отрисовка змейки
 def draw_snake(snake_segments):
     for segment in snake_segments:
         pygame.draw.circle(
@@ -45,14 +44,14 @@ def draw_snake(snake_segments):
             SEGMENT_SIZE // 2)
 
 
-# Функция для отрисовки еды
+# Отрисовка еды
 def draw_food(food_position):
     pygame.draw.circle(window, RED, (food_position[0] + SEGMENT_SIZE // 2,
                                      food_position[1] + SEGMENT_SIZE // 2),
                        SEGMENT_SIZE // 2)
 
 
-# Функция для отображения текста на экране
+# Отображение текста на экране
 def display_text(text, x, y, font_size=24, color=WHITE):
     font = pygame.font.Font(None, font_size)
     text_surface = font.render(text, True, color)
@@ -61,15 +60,14 @@ def display_text(text, x, y, font_size=24, color=WHITE):
     window.blit(text_surface, text_rect)
 
 
-# Функция для запуска новой игры
+# Запуск новой игры
 def new_game():
     window.blit(background_image, (0, 0))
     pygame.display.flip()
-
     game()
 
 
-# Функция для отображения сообщения о завершении игры
+# Сообщение о завершении игры
 def game_over(score):
     while True:
         for event in pygame.event.get():
@@ -94,7 +92,6 @@ def game_over(score):
         pygame.display.flip()
 
 
-# Главная функция игры
 def game():
     # Переменные для змейки
     snake_segments = [[WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2]]
@@ -169,7 +166,7 @@ def game():
             pygame.display.flip()
             continue
 
-        # Обработка движения змейки
+        # Движения змейки
         if direction == 'up':
             new_segment = [
                 snake_segments[0][0], snake_segments[0][1] - SEGMENT_SIZE
@@ -228,7 +225,7 @@ def game():
         window.blit(background_image, (0, 0))
         pygame.display.flip()
 
-        # Ограничение скорости игры
+        # Скорость игры
         clock.tick(10)
 
     # Завершение игры
