@@ -1,2 +1,1 @@
-# snake_game
-Game Snake in python
+The game Snake written in python
