@@ -31,5 +31,10 @@
 - Перейдите в папку с распакованными файлами игры, используя команду **`cd path_to_game_folder`**, где path_to_game_folder - путь к папке с файлами игры. (Например **`cd C:\Users\Public\Downloads\snake\`**)
 - Введите команду **`python snake.py`** и нажмите Enter. (На Mac и Linux скорее всего нужно будет ввести команду **`python3 snake.py`**) Это запустит игру.
 
+##  Лицензия
+
+MIT
+Пользуйтесь, на здоровье!
+
    [официальный веб-сайт Python]: <https://www.python.org/>
    [репозиторию игры на GitHub]: <https://github.com/Vitaliy-Mironov/snake_game/>
