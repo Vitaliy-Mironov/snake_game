@@ -11,6 +11,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+BLUE = (66, 170, 255)
 
 # Размеры окна и сегментов змеи
 WINDOW_WIDTH = 800
@@ -70,18 +71,18 @@ def game_over(score):
                 pygame.quit()
                 return
             elif event.type == KEYDOWN:
-                if event.key == K_x:
+                if event.key == K_ESCAPE:
                     pygame.quit()
                     return
-                elif event.key == K_g:
-                    new_game()
+                elif event.key == K_RETURN:
+                    game()
 
         window.fill(BLACK)
         display_text(f"Игра окончена. Ваш счет: {score}", WINDOW_WIDTH // 2,
                      WINDOW_HEIGHT // 2 - 20)
-        display_text("Закрыть игру - X", WINDOW_WIDTH // 2,
+        display_text("Закрыть игру - ESCAPE", WINDOW_WIDTH // 2,
                      WINDOW_HEIGHT // 2 + 20)
-        display_text("Новая игра - G", WINDOW_WIDTH // 2,
+        display_text("Новая игра - ENTER", WINDOW_WIDTH // 2,
                      WINDOW_HEIGHT // 2 + 60)
         pygame.display.flip()
 
@@ -115,11 +116,11 @@ def game():
             if event.type == QUIT:
                 running = False
             elif event.type == KEYDOWN:
-                if event.key == K_g:
+                if event.key == K_RETURN:
                     game_started = True
-                elif event.key == K_p:
+                elif event.key == K_SPACE:
                     game_paused = not game_paused
-                elif event.key == K_x:
+                elif event.key == K_ESCAPE:
                     running = False
                 elif game_started and not game_paused:
                     if event.key == K_UP and direction != 'down':
@@ -133,17 +134,20 @@ def game():
 
         if not game_started:
             window.fill(BLACK)
-            display_text("Начать игру - G, пауза - P, закрыть игру - X",
-                         WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
-            display_text(
-                "Управление змейкой: Стрелки (Вверх, Вниз, Влево, Вправо)",
-                WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 40)
+            display_text("Начать игру - ENTER (ВВОД), пауза - ПРОБЕЛ, закрыть игру - ESCAPE",
+                        WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+            display_text("Управление змейкой: Стрелки (Вверх, Вниз, Влево, Вправо)",
+                        WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 40)
+            pygame.draw.line(window, WHITE, (WINDOW_WIDTH // 2 - 150, WINDOW_HEIGHT // 2 + 70),
+                            (WINDOW_WIDTH // 2 + 150, WINDOW_HEIGHT // 2 + 70), 2)
+            display_text("Created by Vitaliy Mironov", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100)
+            display_text("www.linkedin.com/in/vitaliy-mironov/", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 120, color=BLUE)
             pygame.display.flip()
             continue
 
         if game_paused:
             window.fill(BLACK)
-            display_text("Пауза - P", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+            display_text("Пауза - ПРОБЕЛ", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
             pygame.display.flip()
             continue
 
