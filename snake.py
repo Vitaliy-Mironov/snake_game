@@ -3,6 +3,9 @@ import random
 import os
 from pygame.locals import *
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+background_image_path = os.path.join(current_directory, "bg.png")
+
 # Инициализация Pygame
 pygame.init()
 
@@ -20,13 +23,13 @@ SEGMENT_SIZE = 20
 
 # Создание окна игры
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+background_image = pygame.image.load(background_image_path)
 pygame.display.set_caption('Змейка')
 
 clock = pygame.time.Clock()
 
 # Инициализация звуковых эффектов
 pygame.mixer.init()
-current_directory = os.path.dirname(os.path.abspath(__file__))
 eat_sound = pygame.mixer.Sound(
     os.path.join(current_directory, "sounds", "eat.wav"))
 game_over_sound = pygame.mixer.Sound(
@@ -60,6 +63,9 @@ def display_text(text, x, y, font_size=24, color=WHITE):
 
 # Функция для запуска новой игры
 def new_game():
+    window.blit(background_image, (0, 0))
+    pygame.display.flip()
+
     game()
 
 
@@ -84,6 +90,7 @@ def game_over(score):
                      WINDOW_HEIGHT // 2 + 20)
         display_text("Новая игра - ENTER", WINDOW_WIDTH // 2,
                      WINDOW_HEIGHT // 2 + 60)
+        window.blit(background_image, (0, 0))
         pygame.display.flip()
 
 
@@ -134,20 +141,31 @@ def game():
 
         if not game_started:
             window.fill(BLACK)
-            display_text("Начать игру - ENTER (ВВОД), пауза - ПРОБЕЛ, закрыть игру - ESCAPE",
-                        WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
-            display_text("Управление змейкой: Стрелки (Вверх, Вниз, Влево, Вправо)",
-                        WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 40)
-            pygame.draw.line(window, WHITE, (WINDOW_WIDTH // 2 - 150, WINDOW_HEIGHT // 2 + 70),
-                            (WINDOW_WIDTH // 2 + 150, WINDOW_HEIGHT // 2 + 70), 2)
-            display_text("Created by Vitaliy Mironov", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100)
-            display_text("www.linkedin.com/in/vitaliy-mironov/", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 120, color=BLUE)
+            display_text(
+                "Начать игру - ENTER (ВВОД), пауза - ПРОБЕЛ, закрыть игру - ESCAPE",
+                WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+            display_text(
+                "Управление змейкой: Стрелки (Вверх, Вниз, Влево, Вправо)",
+                WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 40)
+            pygame.draw.line(
+                window, WHITE,
+                (WINDOW_WIDTH // 2 - 150, WINDOW_HEIGHT // 2 + 70),
+                (WINDOW_WIDTH // 2 + 150, WINDOW_HEIGHT // 2 + 70), 2)
+            display_text("Created by Vitaliy Mironov", WINDOW_WIDTH // 2,
+                         WINDOW_HEIGHT // 2 + 100)
+            display_text("www.linkedin.com/in/vitaliy-mironov/",
+                         WINDOW_WIDTH // 2,
+                         WINDOW_HEIGHT // 2 + 120,
+                         color=BLUE)
+            window.blit(background_image, (0, 0))
             pygame.display.flip()
             continue
 
         if game_paused:
             window.fill(BLACK)
-            display_text("Пауза - ПРОБЕЛ", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+            display_text("Пауза - ПРОБЕЛ", WINDOW_WIDTH // 2,
+                         WINDOW_HEIGHT // 2)
+            window.blit(background_image, (0, 0))
             pygame.display.flip()
             continue
 
@@ -207,6 +225,7 @@ def game():
         draw_snake(snake_segments)
         draw_food(food_position)
         display_text(f"Счет: {score}", WINDOW_WIDTH // 2, 20)
+        window.blit(background_image, (0, 0))
         pygame.display.flip()
 
         # Ограничение скорости игры
