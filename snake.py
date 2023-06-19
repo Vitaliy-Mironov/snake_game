@@ -215,4 +215,5 @@ def game():
 
 
 # Запуск игры
-new_game()
+if __name__ == "__main__":
+    new_game()
